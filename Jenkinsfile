@@ -28,7 +28,7 @@ pipeline {
             steps{
                 script {
 
-                    echo "running test for docker image 102.90.96.171:8083/formular-web:${param.dev_env}"
+                    echo "running test for docker image 102.90.96.171:8083/formular-web:${params.dev_env}"
                 }
             }
         }
