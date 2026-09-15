@@ -1,0 +1,16 @@
+plugins {
+    id 'base'
+}
+
+
+tasks.register('packageApp', Zip) {
+
+    archiveFileName = "f1-legends-${project.version}.zip"
+
+    from('src')
+    from('package.json')
+
+}
+
+
+version = '1.0.0'
