@@ -1,10 +1,7 @@
 pipeline {
     agent any
-    tools {
-        maven ""
-    }
     parameters{
-        version = choice(name:"dev_env", choices ["1.0","2.0","3.0"], description: "deploy environment choice")
+        choice(name:"dev_env", choices:["1.0","2.0","3.0"], description: "deploy environment choice")
         booleanParam(name:"build_feed", defaultValue: "true", description: "")
     }
     stages {
@@ -15,7 +12,7 @@ pipeline {
 
                 script {
 
-                    sh "docker build -t localhost:8083/formular-web:${version} ."
+                    sh "docker build -t 102.90.96.171:8083/formular-web:${params.dev_env} ."
                 }
             }
         }
@@ -25,7 +22,7 @@ pipeline {
 
                 expression {
 
-                    param.build_feed
+                    params.build_feed
                 }
             }
             steps{
@@ -43,14 +40,14 @@ pipeline {
 
                     withCredentials ([
                         usernamePassword (
-                            credentialsId: "nexus_docker_creds"
-                            usernameVariable: 'USR'
+                            credentialsId: "nexus-docker-creds",
+                            usernameVariable: 'USR',
                             passwordVariable: 'PWD'
                         )
                     ]) {
                          echo "deploying artifact to repo environment"
                          sh "echo $PWD | docker login localhost:8083 -u $USR --password-stdin"
-                         sh "docker push localhost:8083/formular-web:${version}"
+                         sh "docker push 102.90.96.171:8083/formular-web:${params.dev_env}"
                     }
                 }
             }
