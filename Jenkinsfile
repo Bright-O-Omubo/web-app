@@ -28,7 +28,7 @@ pipeline {
             steps{
                 script {
 
-                    echo "running test for docker image{param.dev_env}"
+                    echo "running test for docker image${param.dev_env}"
                 }
             }
         }
