@@ -12,7 +12,7 @@ pipeline {
 
                 script {
 
-                    sh "docker build -t 102.90.96.171:8083/formular-web:${params.dev_env} ."
+                    sh "docker build -t 102.88.109.101:8083/formular-web:${params.dev_env} ."
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
             steps{
                 script {
 
-                    echo "running test for docker image 102.90.96.171:8083/formular-web:${params.dev_env}"
+                    echo "running test for docker image 102.88.109.101:8083/formular-web:${params.dev_env}"
                 }
             }
         }
@@ -40,14 +40,14 @@ pipeline {
 
                     withCredentials ([
                         usernamePassword (
-                            credentialsId: "nexus-docker-creds",
+                            credentialsId: "nexus-docker",
                             usernameVariable: 'USR',
                             passwordVariable: 'PWD'
                         )
                     ]) {
                          echo "deploying artifact to repo environment"
                          sh "echo $PWD | docker login localhost:8083 -u $USR --password-stdin"
-                         sh "docker push 102.90.96.171:8083/formular-web:${params.dev_env}"
+                         sh "docker push 102.88.109.101:8083/formular-web:${params.dev_env}"
                     }
                 }
             }
