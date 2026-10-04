@@ -34,7 +34,7 @@ pipeline {
 
                 expression {
 
-                    params.build_feed
+                    params.build_feed == true
                 }
             }
             steps{
