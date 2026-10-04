@@ -15,9 +15,9 @@ def deployBuild() {
     echo " deploying image to nexus repository"
     withCredentials ([
             usernamePassword (
-                    credentialsId: "dockerhub-creds",
-                    usernameVariable: USER,
-                    passwordVariable: PWD
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PWD'
             )
     ]) {
         sh "echo $PWD | docker login -u $USER --password-stdin"
