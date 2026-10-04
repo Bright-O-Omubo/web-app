@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
     agent any
     parameters{
@@ -5,6 +7,16 @@ pipeline {
         booleanParam(name:"build_feed", defaultValue: "true", description: "")
     }
     stages {
+        stage("init") {
+
+             steps {
+
+                  script {
+
+                     gv = load "function.groovy"
+                  }
+             }
+        }
 
         stage("image build") {
 
@@ -12,7 +24,7 @@ pipeline {
 
                 script {
 
-                    sh "docker build -t 102.88.109.101:8083/formular-web:${params.dev_env} ."
+                    gv.imageBuild()
                 }
             }
         }
@@ -28,7 +40,7 @@ pipeline {
             steps{
                 script {
 
-                    echo "running test for docker image 102.88.109.101:8083/formular-web:${params.dev_env}"
+                  gv.buildTest()
                 }
             }
         }
@@ -38,17 +50,7 @@ pipeline {
 
                 script {
 
-                    withCredentials ([
-                        usernamePassword (
-                            credentialsId: "nexus-docker",
-                            usernameVariable: 'USR',
-                            passwordVariable: 'PWD'
-                        )
-                    ]) {
-                         echo "deploying artifact to repo environment"
-                         sh "echo $PWD | docker login localhost:8083 -u $USR --password-stdin"
-                         sh "docker push 102.88.109.101:8083/formular-web:${params.dev_env}"
-                    }
+                    gv.deployBuild()
                 }
             }
         }
