@@ -2,6 +2,9 @@ def gv
 
 pipeline {
     agent any
+    tools {
+        maven "3.9.16"
+    }
     parameters{
         choice(name:"dev_env", choices:["1.0","2.0","3.0"], description: "deploy environment choice")
         booleanParam(name:"build_feed", defaultValue: "true", description: "")
