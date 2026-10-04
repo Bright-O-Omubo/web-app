@@ -21,7 +21,7 @@ def deployBuild() {
             )
     ]) {
         sh "echo $PWD | docker login -u $USER --password-stdin"
-        sh "docker push F!-web/jma:1.9"
+        sh "docker push F1-web/jma:1.9"
     }
 }
 return this
