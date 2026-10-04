@@ -8,7 +8,7 @@ def imageBuild() {
 
 def buildTest() {
     echo "running image test"
-    sh "mvn test"
+    sh "gradle test"
 }
 
 def deployBuild() {
